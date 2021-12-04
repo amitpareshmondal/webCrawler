@@ -1,1 +1,1 @@
-script :  node index.js
+script : start node index.js
