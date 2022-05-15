@@ -10,9 +10,10 @@ app.use(body.json());
 app.use(body.urlencoded({extended:true}));
 app.set('view engine','ejs');
 var validator = require('validator');
-const { response } = require('express');
-const { link } = require('fs');
+// const { response } = require('express');
+// const { link } = require('fs');
 app.use(express.static(__dirname+"/public"));
+//get request on home page
 app.get("/",(req,res)=>{
     res.render("index");
 })
@@ -51,7 +52,7 @@ app.post('/ssl',(req,res)=>{
     (
         async()=>{
             
-            const browser=await pup.launch();
+            const browser=await pup.launch({headless:false});
             const page=await browser.newPage();
             var pageUrl=url;
             const response = await page.goto(pageUrl, {waitUntil: 'networkidle0'});
@@ -201,7 +202,7 @@ app.post("/ada",(req,res)=>{
     }
 //    tabIndex(url);
 async function colorContrast (link){
-    const browser=await pup.launch();
+    const browser=await pup.launch({headless:false});
             const page=await browser.newPage();
             var pageUrl=link;
     await page.goto("https://color.a11y.com/Contrast/");
@@ -219,6 +220,7 @@ const $=cheerio.load(data2);
 
 crawl(url);
 });
+//App.listen()
 app.listen(process.env.PORT || 3000,()=>{
-    console.log("Server running");
+    console.log("Server running on port 3000");
 })
